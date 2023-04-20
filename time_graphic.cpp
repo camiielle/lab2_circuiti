@@ -40,7 +40,9 @@ void grafico() {
   graph_M->SetLineWidth(2);
 
   // Draw the 2kHz multi-graph!
-  TCanvas *myCanvas = new TCanvas();
+  TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas", 1000,380);
+  myCanvas->Divide(2,1);
+  myCanvas->cd(1);
   mg->Draw("al");
   // Build and Draw a legend
   TLegend *leg = new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
@@ -86,7 +88,7 @@ void grafico() {
   graph_M2->SetLineWidth(2);
 
   // Draw the 11kHz multi-graph!
-  TCanvas *myCanvas2 = new TCanvas();
+  myCanvas->cd(2);
   mg2->Draw("al");
   // Build and Draw a legend
   TLegend *leg2 =
@@ -146,15 +148,12 @@ void grafico() {
   leg3->SetNColumns(2);
   leg3->Draw("Same");
 
-  myCanvas->Print("multigrafico_tempo_2kHz.jpg");
-  myCanvas2->Print("multigrafico_tempo_11kHz.jpg");
+  myCanvas->Print("multigrafico_tempo_2kHz_11kHz.jpg");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.jpg");
 
-  myCanvas->Print("multigrafico_tempo_2kHz.pdf");
-  myCanvas2->Print("multigrafico_tempo_11kHz.pdf");
+  myCanvas->Print("multigrafico_tempo_2kHz_11kHz.pdf");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.pdf");
 
-  myCanvas->Print("multigrafico_tempo_2kHz.tex");
-  myCanvas2->Print("multigrafico_tempo_11kHz.tex");
+  myCanvas->Print("multigrafico_tempo_2kHz_11kHz.tex");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.tex");
 }
