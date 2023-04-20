@@ -43,11 +43,13 @@ void grafico() {
   TCanvas *myCanvas = new TCanvas();
   mg->Draw("al");
   // Build and Draw a legend
-  TLegend *leg = new TLegend(.1, .7, .3, .9, "");
+  TLegend *leg = new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
   leg->AddEntry(graph_Gen, "gen");
   leg->AddEntry(graph_W, "woofer");
   leg->AddEntry(graph_T, "tweeter");
   leg->AddEntry(graph_M, "midrange");
+  leg->SetFillStyle(1001);
+  leg->SetNColumns(2);
   leg->Draw("Same");
 
   // 11kHz graph
@@ -87,11 +89,14 @@ void grafico() {
   TCanvas *myCanvas2 = new TCanvas();
   mg2->Draw("al");
   // Build and Draw a legend
-  TLegend *leg2 = new TLegend(.1, .7, .3, .9, "");
+  TLegend *leg2 =
+      new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
   leg2->AddEntry(graph_Gen2, "gen");
   leg2->AddEntry(graph_W2, "woofer");
   leg2->AddEntry(graph_T2, "tweeter");
   leg2->AddEntry(graph_M2, "midrange");
+  leg2->SetFillStyle(1001);
+  leg2->SetNColumns(2);
   leg2->Draw("Same");
 
   // 5.3kHz graph
@@ -131,11 +136,14 @@ void grafico() {
   // Draw the 5.3kHz multi-graph!
   mg3->Draw("al");
   // Build and Draw a legend
-  TLegend *leg3 = new TLegend(.1, .7, .3, .9, "");
+  TLegend *leg3 =
+      new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
   leg3->AddEntry(graph_Gen3, "gen");
   leg3->AddEntry(graph_W3, "woofer");
   leg3->AddEntry(graph_T3, "tweeter");
   leg3->AddEntry(graph_M3, "midrange");
+  leg3->SetFillStyle(1001);
+  leg3->SetNColumns(2);
   leg3->Draw("Same");
 
   myCanvas->Print("multigrafico_tempo_2kHz.jpg");
@@ -146,7 +154,7 @@ void grafico() {
   myCanvas2->Print("multigrafico_tempo_11kHz.pdf");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.pdf");
 
-   myCanvas->Print("multigrafico_tempo_2kHz.tex");
+  myCanvas->Print("multigrafico_tempo_2kHz.tex");
   myCanvas2->Print("multigrafico_tempo_11kHz.tex");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.tex");
 }
