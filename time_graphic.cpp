@@ -6,7 +6,6 @@ void setStyle() {
 }
 
 void grafico() {
-
   // 2kHz graph
   TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle("Frequenza - 2kHz; Tempo (ms); Ampiezza (V)");
@@ -40,7 +39,7 @@ void grafico() {
   graph_M->SetMarkerColor(kMagenta);
   graph_M->SetLineWidth(2);
 
-// Draw the 2kHz multi-graph!
+  // Draw the 2kHz multi-graph!
   TCanvas *myCanvas = new TCanvas();
   mg->Draw("al");
   // Build and Draw a legend
@@ -142,4 +141,12 @@ void grafico() {
   myCanvas->Print("multigrafico_tempo_2kHz.jpg");
   myCanvas2->Print("multigrafico_tempo_11kHz.jpg");
   myCanvas3->Print("multigrafico_tempo_5.3kHz.jpg");
+
+  myCanvas->Print("multigrafico_tempo_2kHz.pdf");
+  myCanvas2->Print("multigrafico_tempo_11kHz.pdf");
+  myCanvas3->Print("multigrafico_tempo_5.3kHz.pdf");
+
+   myCanvas->Print("multigrafico_tempo_2kHz.tex");
+  myCanvas2->Print("multigrafico_tempo_11kHz.tex");
+  myCanvas3->Print("multigrafico_tempo_5.3kHz.tex");
 }
