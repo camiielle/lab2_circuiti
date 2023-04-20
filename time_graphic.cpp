@@ -25,19 +25,19 @@ void grafico() {
   // Cosmetics
   graph_Gen->SetLineColor(kBlue);
   graph_Gen->SetMarkerColor(kBlue);
-  graph_Gen->SetLineWidth(2);
+  graph_Gen->SetLineWidth(1);
 
   graph_W->SetLineColor(kRed);
   graph_W->SetMarkerColor(kRed);
-  graph_W->SetLineWidth(2);
+  graph_W->SetLineWidth(1);
 
   graph_T->SetLineColor(kGreen);
   graph_T->SetMarkerColor(kGreen);
-  graph_T->SetLineWidth(2);
+  graph_T->SetLineWidth(1);
 
   graph_M->SetLineColor(kMagenta);
   graph_M->SetMarkerColor(kMagenta);
-  graph_M->SetLineWidth(2);
+  graph_M->SetLineWidth(1);
 
   // Draw the 2kHz multi-graph!
   TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas", 1000,380);
@@ -73,19 +73,19 @@ void grafico() {
   // Cosmetics
   graph_Gen2->SetLineColor(kBlue);
   graph_Gen2->SetMarkerColor(kBlue);
-  graph_Gen2->SetLineWidth(2);
+  graph_Gen2->SetLineWidth(1);
 
   graph_W2->SetLineColor(kRed);
   graph_W2->SetMarkerColor(kRed);
-  graph_W2->SetLineWidth(2);
+  graph_W2->SetLineWidth(1);
 
   graph_T2->SetLineColor(kGreen);
   graph_T2->SetMarkerColor(kGreen);
-  graph_T2->SetLineWidth(2);
+  graph_T2->SetLineWidth(1);
 
   graph_M2->SetLineColor(kMagenta);
   graph_M2->SetMarkerColor(kMagenta);
-  graph_M2->SetLineWidth(2);
+  graph_M2->SetLineWidth(1);
 
   // Draw the 11kHz multi-graph!
   myCanvas->cd(2);
@@ -120,19 +120,19 @@ void grafico() {
   // Cosmetics
   graph_Gen3->SetLineColor(kBlue);
   graph_Gen3->SetMarkerColor(kBlue);
-  graph_Gen3->SetLineWidth(2);
+  graph_Gen3->SetLineWidth(1);
 
   graph_W3->SetLineColor(kRed);
   graph_W3->SetMarkerColor(kRed);
-  graph_W3->SetLineWidth(2);
+  graph_W3->SetLineWidth(1);
 
   graph_T3->SetLineColor(kGreen);
   graph_T3->SetMarkerColor(kGreen);
-  graph_T3->SetLineWidth(2);
+  graph_T3->SetLineWidth(1);
 
   graph_M3->SetLineColor(kMagenta);
   graph_M3->SetMarkerColor(kMagenta);
-  graph_M3->SetLineWidth(2);
+  graph_M3->SetLineWidth(1);
 
   TCanvas *myCanvas3 = new TCanvas();
   // Draw the 5.3kHz multi-graph!
