@@ -8,7 +8,7 @@ void setStyle() {
 void grafico() {
   // 2kHz graph
   TMultiGraph *mg = new TMultiGraph();
-  mg->SetTitle("Frequenza - 2kHz; Tempo (ms); Ampiezza (V)");
+  mg->SetTitle("Frequenza - 2kHz; Tempo (ms); Tensione (V)");
 
   TGraph *graph_Gen = new TGraph("Vgen(2kHz)ms.txt", "%lg %lg");
   mg->Add(graph_Gen);
@@ -56,7 +56,7 @@ void grafico() {
 
   // 11kHz graph
   TMultiGraph *mg2 = new TMultiGraph();
-  mg2->SetTitle("Frequenza - 11kHz; Tempo (ms); Ampiezza (V)");
+  mg2->SetTitle("Frequenza - 11kHz; Tempo (ms); Tensione (V)");
 
   TGraph *graph_Gen2 = new TGraph("Vgen(11kHz)ms.txt", "%lg %lg");
   mg2->Add(graph_Gen2);
@@ -103,7 +103,7 @@ void grafico() {
 
   // 5.3kHz graph
   TMultiGraph *mg3 = new TMultiGraph();
-  mg3->SetTitle("Frequenza - 5.3kHz; Tempo (ms); Ampiezza (V)");
+  mg3->SetTitle("Frequenza - 5.3kHz; Tempo (ms); Tensione (V)");
 
   TGraph *graph_Gen3 = new TGraph("Vgen(5.3kHz)ms - Copia.txt", "%lg %lg");
   mg3->Add(graph_Gen3);
