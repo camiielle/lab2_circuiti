@@ -23,16 +23,16 @@ void grafico() {
   mg->Add(graph_M);
 
   // Cosmetics
-  graph_Gen->SetLineColor(kBlue);
-  graph_Gen->SetMarkerColor(kBlue);
+  graph_Gen->SetLineColor(kBlue-4);
+  graph_Gen->SetMarkerColor(kBlue-4);
   graph_Gen->SetLineWidth(1);
 
-  graph_W->SetLineColor(kRed);
-  graph_W->SetMarkerColor(kRed);
+  graph_W->SetLineColor(kOrange-3);
+  graph_W->SetMarkerColor(kOrange-3);
   graph_W->SetLineWidth(1);
 
-  graph_T->SetLineColor(kGreen);
-  graph_T->SetMarkerColor(kGreen);
+  graph_T->SetLineColor(kGreen-9);
+  graph_T->SetMarkerColor(kGreen-9);
   graph_T->SetLineWidth(1);
 
   graph_M->SetLineColor(kMagenta);
@@ -71,16 +71,16 @@ void grafico() {
   mg2->Add(graph_M2);
 
   // Cosmetics
-  graph_Gen2->SetLineColor(kBlue);
-  graph_Gen2->SetMarkerColor(kBlue);
+  graph_Gen2->SetLineColor(kBlue-4);
+  graph_Gen2->SetMarkerColor(kBlue-4);
   graph_Gen2->SetLineWidth(1);
 
-  graph_W2->SetLineColor(kRed);
-  graph_W2->SetMarkerColor(kRed);
+  graph_W2->SetLineColor(kOrange-3);
+  graph_W2->SetMarkerColor(kOrange-3);
   graph_W2->SetLineWidth(1);
 
-  graph_T2->SetLineColor(kGreen);
-  graph_T2->SetMarkerColor(kGreen);
+  graph_T2->SetLineColor(kGreen-9);
+  graph_T2->SetMarkerColor(kGreen-9);
   graph_T2->SetLineWidth(1);
 
   graph_M2->SetLineColor(kMagenta);
@@ -118,16 +118,16 @@ void grafico() {
   mg3->Add(graph_M3);
 
   // Cosmetics
-  graph_Gen3->SetLineColor(kBlue);
-  graph_Gen3->SetMarkerColor(kBlue);
+  graph_Gen3->SetLineColor(kBlue-4);
+  graph_Gen3->SetMarkerColor(kBlue-4);
   graph_Gen3->SetLineWidth(1);
 
-  graph_W3->SetLineColor(kRed);
-  graph_W3->SetMarkerColor(kRed);
+  graph_W3->SetLineColor(kOrange-3);
+  graph_W3->SetMarkerColor(kOrange-3);
   graph_W3->SetLineWidth(1);
 
-  graph_T3->SetLineColor(kGreen);
-  graph_T3->SetMarkerColor(kGreen);
+  graph_T3->SetLineColor(kGreen-9);
+  graph_T3->SetMarkerColor(kGreen-9);
   graph_T3->SetLineWidth(1);
 
   graph_M3->SetLineColor(kMagenta);
