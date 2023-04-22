@@ -20,10 +20,6 @@ void grafico() {
   mg->Add(A3);
 
   // Cosmetics
-  A3->SetLineColor(kMagenta);
-  A3->SetMarkerColor(kMagenta);
-  A3->SetLineWidth(2);
-
   A1->SetLineColor(kOrange-3);
   A1->SetMarkerColor(kOrange-3);
   A1->SetLineWidth(2);
@@ -31,6 +27,10 @@ void grafico() {
   A2->SetLineColor(kGreen-9);
   A2->SetMarkerColor(kGreen-9);
   A2->SetLineWidth(2);
+
+  A3->SetLineColor(kMagenta);
+  A3->SetMarkerColor(kMagenta);
+  A3->SetLineWidth(2);
 
   // Draw the multi-graph!
   TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas", 800,380);
@@ -46,4 +46,28 @@ void grafico() {
   myCanvas->Print("multigrafico_sistematico_fase.jpg");
   myCanvas->Print("multigrafico_sistematico_fase.pdf");
   myCanvas->Print("multigrafico_sistematico_fase.tex");
+
+
+  //perofrming a linear fit 
+    TF1 *f_A1 = new TF1("f_A1","([0]+[1]*x)",2050,11000);
+    f_A1->SetParameter(0,0.);
+    A1->Fit("f_A1","R,Q");
+    std::cout << "\nFit result for A1: offset_{A1} =" << f_A1->GetParameter(0) << " +/- " << f_A1->GetParError(0) << ",  slope_{A1} = " 
+    << f_A1->GetParameter(1) << " +/- " << f_A1->GetParError(1) << std::endl;
+    std::cout << '\n';
+
+    TF1 *f_A2 = new TF1("f_A2","([0]+[1]*x)",2050,11000);
+    f_A2->SetParameter(0,1.);
+    A2->Fit("f_A2","R,Q");
+    std::cout << "\nFit result for A2: offset_{A2} =" << f_A2->GetParameter(0) << " +/- " << f_A2->GetParError(0) << ",  slope_{A2} = " 
+    << f_A2->GetParameter(1) << " +/- " << f_A2->GetParError(1) << std::endl;
+    std::cout << '\n';
+    
+    TF1 *f_A3 = new TF1("f_A3","([0]+[1]*x)",2050,11000);
+    f_A3->SetParameter(0,2.);
+    A3->Fit("f_A3","R,Q");
+    std::cout << "\nFit result for A3: offset_{A3} =" << f_A3->GetParameter(0) << " +/- " << f_A3->GetParError(0) << ",  slope_{A3} = " 
+    << f_A3->GetParameter(1) << " +/- " << f_A3->GetParError(1) << std::endl;
+    std::cout << '\n';
+
 }
