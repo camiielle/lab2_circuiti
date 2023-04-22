@@ -5,8 +5,8 @@ void setStyle() {
   gStyle->SetOptTitle(0);
 }
 
-void grafico() {
-  // 2kHz graph
+void grafico_errori() {
+
   TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle("Fase in funzione della frequenza; Frequenza (Hz); Fase (gradi)");
 
@@ -69,5 +69,47 @@ void grafico() {
     std::cout << "\nFit result for A3: offset_{A3} =" << f_A3->GetParameter(0) << " +/- " << f_A3->GetParError(0) << ",  slope_{A3} = " 
     << f_A3->GetParameter(1) << " +/- " << f_A3->GetParError(1) << std::endl;
     std::cout << '\n';
+}
+
+void grafico_fasi(){
+TMultiGraph *mg = new TMultiGraph();
+  mg->SetTitle("Fase in funzione della frequenza; Frequenza (Hz); Fase (gradi)");
+
+  TGraph *fase_w = new TGraph("Fase_w.txt", "%lg %lg");
+  mg->Add(fase_w);
+
+  TGraph *fase_t = new TGraph("Fase_t.txt", "%lg %lg");
+  mg->Add(fase_t);
+
+  TGraph *fase_m = new TGraph("Fase_m.txt", "%lg %lg");
+  mg->Add(fase_m);
+
+  // Cosmetics
+  fase_w->SetLineColor(kOrange-3);
+  fase_w->SetMarkerColor(kOrange-3);
+  fase_w->SetLineWidth(2);
+
+  fase_t->SetLineColor(kGreen-9);
+  fase_t->SetMarkerColor(kGreen-9);
+  fase_t->SetLineWidth(2);
+
+  fase_m->SetLineColor(kMagenta);
+  fase_m->SetMarkerColor(kMagenta);
+  fase_m->SetLineWidth(2);
+
+  // Draw the multi-graph!
+  TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas", 900,500);
+  mg->Draw("al");
+  // Build and Draw a legend
+  TLegend *leg = new TLegend(0.7862372,0.8115055,0.8850659,0.8812729,NULL,"brNDC");
+  leg->AddEntry(fase_w, "woofer");
+  leg->AddEntry(fase_t, "tweeter");
+  leg->AddEntry(fase_m, "midrange");
+  leg->SetFillStyle(1001);
+  leg->Draw("Same");
+
+  myCanvas->Print("multigrafico_fase.jpg");
+  myCanvas->Print("multigrafico_fase.pdf");
+  myCanvas->Print("multigrafico_fase.tex");
 
 }
