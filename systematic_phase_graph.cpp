@@ -56,7 +56,7 @@ void grafico() {
     << f_A1->GetParameter(1) << " +/- " << f_A1->GetParError(1) << std::endl;
     std::cout << '\n';
 
-    TF1 *f_A2 = new TF1("f_A2","([0]+[1]*x)",2050,11000);
+    TF1 *f_A2 = new TF1("f_A2","([0]+[1]*x)",2000,11000);
     f_A2->SetParameter(0,1.);
     A2->Fit("f_A2","R,Q");
     std::cout << "\nFit result for A2: offset_{A2} =" << f_A2->GetParameter(0) << " +/- " << f_A2->GetParError(0) << ",  slope_{A2} = " 
