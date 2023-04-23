@@ -1,4 +1,3 @@
-
 void setStyle() {
   gROOT->SetStyle("Plain");
   gStyle->SetPalette(57);
@@ -108,6 +107,27 @@ TMultiGraph *mg = new TMultiGraph();
   leg->SetFillStyle(1001);
   leg->Draw("Same");
 
+  //fitting the phase/frequency plot
+
+  TF1* fitwoofer = new TF1("fitwoofer", "(180/pi) * TMath::ATan( -(2*pi*x*[0])/([1]) )");
+  fitwoofer->SetParameter(0,0.00003917181499);
+  fitwoofer->SetParameter(1,1.1725);
+  fase_w->Fit("fitwoofer","Q");
+  std::cout << "Il fit restituisce: tau_{w} = " << fitwoofer->GetParameter(0) << " +/- " << fitwoofer->GetParError(0) << ",   mu_{w} = " << fitwoofer->GetParameter(1) << " +/- " << fitwoofer->GetParError(1) << std::endl;
+
+  TF1* fittweeter = new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/([1]*[0]*pi*2*x) )");
+  fittweeter->SetParameter(0,0.00002326516);
+  fittweeter->SetParameter(1,1.167);
+  fase_t->Fit("fittweeter","Q");
+  std::cout << "Il fit restituisce: tau_{t} = " << fittweeter->GetParameter(0) << " +/- " << fittweeter->GetParError(0) << ",   mu_{t} = " << fittweeter->GetParameter(1) << " +/- " << fittweeter->GetParError(1) << std::endl;
+  
+  TF1* fitmidrange = new TF1("fitmidrange", "(180/pi) * TMath::ATan( (1-4*pi*pi*x*x*[1]*[2])/(2*pi*x*[0]*[2]) )");
+  fitmidrange->SetParameter(0,1.17257486);
+  fitmidrange->SetParameter(1,0.00003944449078);
+  fitmidrange->SetParameter(2,0.00002613602);
+  fase_m->Fit("fitmidrange","Q");
+  std::cout << "Il fit restituisce: mu_{m} = " << fitmidrange->GetParameter(0) << " +/- " << fitmidrange->GetParError(0) << ",   tau_{lm} = " << fitmidrange->GetParameter(1) << " +/- " << fitmidrange->GetParError(1) << ",   tau_{cm} = " << fitmidrange->GetParameter(2) << " +/- " << fitmidrange->GetParError(2) << std::endl;
+  
   myCanvas->Print("multigrafico_fase.jpg");
   myCanvas->Print("multigrafico_fase.pdf");
   myCanvas->Print("multigrafico_fase.tex");
