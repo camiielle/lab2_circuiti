@@ -71,10 +71,23 @@ void grafico_errori() {
 }
 
 void grafico_fasi(){
+  //Modifying fase_w.txt to account for systematic error
+  std::ifstream Fase_w("Fase_w.txt", std::ifstream::in);
+  std::ofstream Fase_w_corretto("Fase_w_corretto.txt", std::ofstream::out);
+  
+  double coeff_ang_A1 = 6.7411 * 1E-5;
+  while(Fase_w.good()){
+    double frequenza, fase;
+    Fase_w >> frequenza >> fase;
+    double fase_corr = fase - coeff_ang_A1*frequenza; 
+    Fase_w_corretto << frequenza << " " << fase_corr << std::endl;
+  }
+
+
 TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle("Fase in funzione della frequenza; Frequenza (Hz); Fase (gradi)");
 
-  TGraph *fase_w = new TGraph("Fase_w.txt", "%lg %lg");
+  TGraph *fase_w = new TGraph("Fase_w_corretto.txt", "%lg %lg");
   mg->Add(fase_w);
 
   TGraph *fase_t = new TGraph("Fase_t.txt", "%lg %lg");
@@ -109,10 +122,12 @@ TMultiGraph *mg = new TMultiGraph();
 
   //fitting the phase/frequency plot
 
+  
+  
   TF1* fitwoofer = new TF1("fitwoofer", "(180/pi) * TMath::ATan( -(2*pi*x*[0])/([1]) )");
   fitwoofer->SetParameter(0,0.00003917181499);
   fitwoofer->SetParameter(1,1.1725);
-  fase_w->Fit("fitwoofer","Q");
+  fase_w->Fit("fitwoofer");
   std::cout << "Il fit restituisce: tau_{w} = " << fitwoofer->GetParameter(0) << " +/- " << fitwoofer->GetParError(0) << ",   mu_{w} = " << fitwoofer->GetParameter(1) << " +/- " << fitwoofer->GetParError(1) << std::endl;
 
   TF1* fittweeter = new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/([1]*[0]*pi*2*x) )");
