@@ -8,7 +8,7 @@ void setStyle_frequenze() {
 void grafico_frequenze() {
   
   TMultiGraph *mg = new TMultiGraph();
-  mg->SetTitle("Ampiezza in funzione della frequenza; Frequenza (Hz); Ampiezza (V)");
+  mg->SetTitle("Gain in funzione della frequenza; Frequenza (Hz); Gain (adimensionale)");
 
   TGraphErrors *graph_W = new TGraphErrors("Ampiezza_w_div5.txt", "%lg %lg %lg");
   mg->Add(graph_W);
