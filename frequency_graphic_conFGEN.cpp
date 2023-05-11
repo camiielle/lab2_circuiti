@@ -49,13 +49,13 @@ void grafico_frequenze() {
   TF1* fitwoofer = new TF1("fitwoofer","1./(sqrt([0]*[0]+4*pi*pi*(x*x)*([1]*[1])))",2000,11000);
   fitwoofer->SetParameter(0,1.18);
   fitwoofer->SetParameter(1,0.0000063);
-  graph_W->Fit("fitwoofer","R,Q,E,W");
+  graph_W->Fit("fitwoofer","R,Q");
   std::cout << "\nFit result for V_W: mu_{w} =" << fitwoofer->GetParameter(0) << " +/- " << fitwoofer->GetParError(0) << ",   tau_{w} = " << fitwoofer->GetParameter(1) << " +/- " << fitwoofer->GetParError(1) << std::endl;
 
   TF1* fittweeter = new TF1("fittweeter","1./(sqrt([0]*[0]+1/(4*pi*pi*x*x*[1]*[1])))",2000,11000);
   fittweeter->SetParameter(0,1.17);
   fittweeter->SetParameter(1,0.0000063);
-  graph_T->Fit("fittweeter","R,Q,E");
+  graph_T->Fit("fittweeter","R,Q");
   std::cout << "\nFit result for V_T: mu_{t} =" << fittweeter->GetParameter(0) << " +/- " << fittweeter->GetParError(0) << ",  tau_{t} = " << fittweeter->GetParameter(1) << " +/- " << fittweeter->GetParError(1) << std::endl;
   std::cout << '\n';
 
@@ -63,7 +63,7 @@ void grafico_frequenze() {
   fitmidrange->SetParameter(0,1.18);
   fitmidrange->SetParameter(1,0.000063);
   fitmidrange->SetParameter(2,0.000063);
-  graph_M->Fit("fitmidrange","Q,R,W,E");
+  graph_M->Fit("fitmidrange","Q,R,W");
   std::cout << "\nFit result for V_M: mu_{m} =" << fitmidrange->GetParameter(0) << " +/- " << fitmidrange->GetParError(0) << ",  tau_{lm} = " << fitmidrange->GetParameter(1) << " +/- " << fitmidrange->GetParError(1) << ",   tau_{cm} = " << fitmidrange->GetParameter(2) << " +/- " << fitmidrange->GetParError(2) << std::endl;;
   std::cout << '\n';
 
