@@ -59,7 +59,7 @@ void grafico_errori() {
   // perofrming a linear fit
   TF1 *f_A0 = new TF1("f_A0", "([0]+[1]*x)", 2050, 11000);
   f_A0->SetParameter(0, 0.);
-  A1->Fit("f_A0", "R,Q, N");
+  A0->Fit("f_A0", "R,Q, N");
   std::cout << "\nFit result for A0: offset_{A0} =" << f_A0->GetParameter(0)
             << " +/- " << f_A0->GetParError(0)
             << ",  slope_{A1} = " << f_A0->GetParameter(1) << " +/- "
@@ -96,16 +96,43 @@ void grafico_errori() {
 
 void grafico_fasi() {
   // Modifying fase_w.txt to account for systematic error
+  
+  //relative phase of A0 (as obtained by root fit)
+  double offset = 0; //6.73711;
+  double coeff_ang_A0 = 6.39486 * 1E-5;
+
   std::ifstream Fase_w("Fase_w.txt", std::ifstream::in);
   std::ofstream Fase_w_corretto("Fase_w_corretto.txt", std::ofstream::out);
-
-  double coeff_ang_A1 = 6.57 * 1E-5;
-  double err = 0.055;
+  
+  double coeff_ang_A1 = 0.0009662;
+  double err = 0.032;
   while (Fase_w.good()) {
     double frequenza, fase;
     Fase_w >> frequenza >> fase;
-    double fase_corr = fase - coeff_ang_A1 * frequenza;
+    double fase_corr = fase - (coeff_ang_A1-coeff_ang_A0) * frequenza - offset;
     Fase_w_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
+  }
+
+  std::ifstream Fase_t("Fase_t.txt", std::ifstream::in);
+  std::ofstream Fase_t_corretto("Fase_t_corretto.txt", std::ofstream::out);
+
+  double coeff_ang_A2 =  0.00186314;
+  while (Fase_t.good()) {
+    double frequenza, fase;
+    Fase_t >> frequenza >> fase;
+    double fase_corr = fase - (coeff_ang_A2-coeff_ang_A0) * frequenza - offset;
+    Fase_t_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
+  }
+
+  std::ifstream Fase_m("Fase_m.txt", std::ifstream::in);
+  std::ofstream Fase_m_corretto("Fase_m_corretto.txt", std::ofstream::out);
+
+  double coeff_ang_A3 =  0.00276136;
+  while (Fase_m.good()) {
+    double frequenza, fase;
+    Fase_m >> frequenza >> fase;
+    double fase_corr = fase - (coeff_ang_A3-coeff_ang_A0) * frequenza - offset;
+    Fase_m_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
   }
 
   TMultiGraph *mg = new TMultiGraph();
@@ -115,10 +142,10 @@ void grafico_fasi() {
   TGraphErrors *fase_w = new TGraphErrors("Fase_w_corretto.txt", "%lg %lg %lg");
   mg->Add(fase_w);
 
-  TGraph *fase_t = new TGraph("Fase_t.txt", "%lg %lg");
+  TGraphErrors* fase_t = new TGraphErrors("Fase_t_corretto.txt", "%lg %lg %lg");
   mg->Add(fase_t);
 
-  TGraph *fase_m = new TGraph("Fase_m.txt", "%lg %lg");
+  TGraphErrors *fase_m = new TGraphErrors("Fase_m_corretto.txt", "%lg %lg %lg");
   mg->Add(fase_m);
 
   // Cosmetics
