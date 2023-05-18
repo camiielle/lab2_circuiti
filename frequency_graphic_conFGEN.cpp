@@ -60,9 +60,9 @@ void grafico_frequenze() {
   std::cout << '\n';
 
   TF1* fitmidrange = new TF1("fitmidrange","1./(sqrt([0]*[0] + ( [1]*x*2*pi - (1/([2]*x*2*pi)) )^2 ))",2000,11000);
-  fitmidrange->SetParameter(0,1.18);
-  fitmidrange->SetParameter(1,0.0000063);
-  fitmidrange->SetParameter(2,0.0000063);
+  fitmidrange->SetParameter(0,1.1725748);
+  fitmidrange->SetParameter(1,0.00003944449078);
+  fitmidrange->SetParameter(2,0.00002613602);
   graph_M->Fit("fitmidrange","Q,R");
   std::cout << "\nFit result for V_M: mu_{m} =" << fitmidrange->GetParameter(0) << " +/- " << fitmidrange->GetParError(0) << ",  tau_{lm} = " << fitmidrange->GetParameter(1) << " +/- " << fitmidrange->GetParError(1) << ",   tau_{cm} = " << fitmidrange->GetParameter(2) << " +/- " << fitmidrange->GetParError(2) << std::endl;;
   std::cout << '\n';
