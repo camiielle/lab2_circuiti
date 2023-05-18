@@ -1,22 +1,22 @@
 
-void setStyle_frequenze() {
+void setStyle_frequenze_senzaFGEN() {
   gROOT->SetStyle("Plain");
   gStyle->SetPalette(57);
   gStyle->SetOptTitle(0);
 }
 
-void grafico_frequenze() {
+void grafico_frequenze_senzaFGEN() {
   
   TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle("Gain in funzione della frequenza; Frequenza (Hz); Gain (adimensionale)");
 
-  TGraphErrors *graph_W = new TGraphErrors("Ampiezza_w_div5.txt", "%lg %lg %lg");
+  TGraphErrors *graph_W = new TGraphErrors("Ampiezza_w_div5.txt", "%lg %lg %lg %lg");
   mg->Add(graph_W);
 
-  TGraphErrors *graph_T = new TGraphErrors("Ampiezza_t_div5.txt", "%lg %lg %lg");
+  TGraphErrors *graph_T = new TGraphErrors("Ampiezza_t_div5.txt", "%lg %lg %lg %lg");
   mg->Add(graph_T);
 
-  TGraphErrors *graph_M = new TGraphErrors("Ampiezza_m_div5.txt", "%lg %lg %lg");
+  TGraphErrors *graph_M = new TGraphErrors("Ampiezza_m_div5.txt", "%lg %lg %lg %lg");
   mg->Add(graph_M);
 
   // Cosmetics
