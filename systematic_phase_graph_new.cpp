@@ -95,7 +95,6 @@ void grafico_errori() {
 }
 
 void grafico_fasi() {
-  // Modifying fase_w.txt to account for systematic error
   
   //relative phase of A0 (as obtained by root fit)
   double offset = 0; //6.73711;
@@ -105,13 +104,15 @@ void grafico_fasi() {
   std::ofstream Fase_w_corretto("Fase_w_corretto.txt", std::ofstream::out);
   
   double coeff_ang_A1 = 0.0009662;
-  double err = 0.032;
+  double err_freq = 3*0.08749;
+  double err_fase = 3*0.03231;
   while (Fase_w.good()) {
     double frequenza, fase;
     Fase_w >> frequenza >> fase;
     double fase_corr = fase - (coeff_ang_A1-coeff_ang_A0) * frequenza - offset;
-    Fase_w_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
+    Fase_w_corretto << frequenza << " " << fase_corr << " " << err_freq << " " << err_fase << std::endl;
   }
+  Fase_w.close();
 
   std::ifstream Fase_t("Fase_t.txt", std::ifstream::in);
   std::ofstream Fase_t_corretto("Fase_t_corretto.txt", std::ofstream::out);
@@ -121,8 +122,9 @@ void grafico_fasi() {
     double frequenza, fase;
     Fase_t >> frequenza >> fase;
     double fase_corr = fase - (coeff_ang_A2-coeff_ang_A0) * frequenza - offset;
-    Fase_t_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
+    Fase_t_corretto << frequenza << " " << fase_corr << " " << err_freq << " " << err_fase << std::endl;
   }
+  Fase_t.close();
 
   std::ifstream Fase_m("Fase_m.txt", std::ifstream::in);
   std::ofstream Fase_m_corretto("Fase_m_corretto.txt", std::ofstream::out);
@@ -132,20 +134,21 @@ void grafico_fasi() {
     double frequenza, fase;
     Fase_m >> frequenza >> fase;
     double fase_corr = fase - (coeff_ang_A3-coeff_ang_A0) * frequenza - offset;
-    Fase_m_corretto << frequenza << " " << fase_corr << " " << err << std::endl;
+    Fase_m_corretto << frequenza << " " << fase_corr << " " << err_freq << " " << err_fase << std::endl;
   }
+  Fase_m.close();
 
   TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle(
       "Fase in funzione della frequenza; Frequenza (Hz); Fase (gradi)");
 
-  TGraphErrors *fase_w = new TGraphErrors("Fase_w_corretto.txt", "%lg %lg %lg");
+  TGraphErrors* fase_w = new TGraphErrors("Fase_w_corretto.txt", "%lg %lg %lg %lg");
   mg->Add(fase_w);
 
-  TGraphErrors* fase_t = new TGraphErrors("Fase_t_corretto.txt", "%lg %lg %lg");
+  TGraphErrors* fase_t = new TGraphErrors("Fase_t_corretto.txt", "%lg %lg %lg %lg");
   mg->Add(fase_t);
 
-  TGraphErrors *fase_m = new TGraphErrors("Fase_m_corretto.txt", "%lg %lg %lg");
+  TGraphErrors* fase_m = new TGraphErrors("Fase_m_corretto.txt", "%lg %lg %lg %lg");
   mg->Add(fase_m);
 
   // Cosmetics
@@ -180,35 +183,35 @@ void grafico_fasi() {
               2000, 11000);
   fitwoofer->SetParameter(0, 0.00003917181499);
   fitwoofer->SetParameter(1, 1.1725);
-  fase_w->Fit("fitwoofer");
+  fase_w->Fit("fitwoofer", "Q,R,E");
   std::cout << "Il fit restituisce: tau_{w} = " << fitwoofer->GetParameter(0)
             << " +/- " << fitwoofer->GetParError(0)
             << ",   mu_{w} = " << fitwoofer->GetParameter(1) << " +/- "
-            << fitwoofer->GetParError(1) << std::endl;
+            << fitwoofer->GetParError(1) << ", con un chi2 di: " << fitwoofer->GetChisquare()/fitwoofer->GetNDF() << std::endl;
 
   TF1 *fittweeter =
-      new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/([1]*[0]*pi*2*x) )");
-  fittweeter->SetParameter(0, 0.00002326516);
-  fittweeter->SetParameter(1, 1.167);
-  fase_t->Fit("fittweeter", "Q");
+      new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/(2*pi*x*[0]*[1]) )", 2000,11000);
+  fittweeter->SetParameter(0, 0.0000235374);
+  fittweeter->SetParameter(1, 1.18805);
+  fase_t->Fit("fittweeter", "Q,E,R");
   std::cout << "Il fit restituisce: tau_{t} = " << fittweeter->GetParameter(0)
             << " +/- " << fittweeter->GetParError(0)
             << ",   mu_{t} = " << fittweeter->GetParameter(1) << " +/- "
-            << fittweeter->GetParError(1) << std::endl;
+            << fittweeter->GetParError(1) << ", con un chi2 di: " << fittweeter->GetChisquare()/fittweeter->GetNDF() << std::endl;
 
   TF1 *fitmidrange = new TF1(
       "fitmidrange",
-      "(180/pi) * TMath::ATan( (1-4*pi*pi*x*x*[1]*[2])/(2*pi*x*[0]*[2]) )");
+      "(180/pi) * TMath::ATan( (1-4*pi*pi*x*x*[1]*[2])/(2*pi*x*[0]*[2]) )", 2000,11000);
   fitmidrange->SetParameter(0, 1.17257486);
   fitmidrange->SetParameter(1, 0.00003944449078);
   fitmidrange->SetParameter(2, 0.00002613602);
-  fase_m->Fit("fitmidrange", "Q");
+  fase_m->Fit("fitmidrange", "Q,R,E");
   std::cout << "Il fit restituisce: mu_{m} = " << fitmidrange->GetParameter(0)
             << " +/- " << fitmidrange->GetParError(0)
             << ",   tau_{lm} = " << fitmidrange->GetParameter(1) << " +/- "
             << fitmidrange->GetParError(1)
             << ",   tau_{cm} = " << fitmidrange->GetParameter(2) << " +/- "
-            << fitmidrange->GetParError(2) << std::endl;
+            << fitmidrange->GetParError(2) << ", con un chi2 di: " << fitmidrange->GetChisquare()/fitmidrange->GetNDF() << std::endl;
 
   myCanvas->Print("multigrafico_fase.jpg");
   myCanvas->Print("multigrafico_fase.pdf");
