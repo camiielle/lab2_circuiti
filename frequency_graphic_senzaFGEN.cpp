@@ -50,7 +50,7 @@ void grafico_frequenze_senzaFGEN() {
 
   // fitting gain function, i.e. Voltage/5V
   TF1 *fitwoofer = new TF1(
-      "fitwoofer", "1./(sqrt([0]*[0]+4*pi*pi*(x*x)*([1]*[1])))", 2000, 11000);
+      "fitwoofer", "1./(sqrt([0]*[0]+4*pi*pi*(x*x)*([1]*[1])))", 4000, 6000);
   fitwoofer->SetParameter(0, 1.28);
   fitwoofer->SetParameter(1, 0.0000063);
   graph_W->Fit("fitwoofer", "R,Q");
@@ -62,7 +62,7 @@ void grafico_frequenze_senzaFGEN() {
             << std::endl;
 
   TF1 *fittweeter = new TF1(
-      "fittweeter", "1./(sqrt([0]*[0]+1/(4*pi*pi*x*x*[1]*[1])))", 2000, 11000);
+      "fittweeter", "1./(sqrt([0]*[0]+1/(4*pi*pi*x*x*[1]*[1])))", 4000, 6000);
   fittweeter->SetParameter(0, -1.2);
   fittweeter->SetParameter(1, 0.0000063);
   graph_T->Fit("fittweeter", "R,Q");
