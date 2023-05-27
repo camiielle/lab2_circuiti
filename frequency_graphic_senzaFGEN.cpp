@@ -58,7 +58,7 @@ void grafico_frequenze_senzaFGEN() {
             << " +/- " << fitwoofer->GetParError(0)
             << ",   tau_{w} = " << fitwoofer->GetParameter(1) << " +/- "
             << fitwoofer->GetParError(1)
-            << "chi2:" << fitwoofer->GetChisquare() / fitwoofer->GetNDF()
+            << " chi2:" << fitwoofer->GetChisquare() / fitwoofer->GetNDF()
             << std::endl;
 
   TF1 *fittweeter = new TF1(
@@ -70,9 +70,8 @@ void grafico_frequenze_senzaFGEN() {
             << " +/- " << fittweeter->GetParError(0)
             << ",  tau_{t} = " << fittweeter->GetParameter(1) << " +/- "
             << fittweeter->GetParError(1)
-            << "chi2:" << fittweeter->GetChisquare() / fittweeter->GetNDF()
+            << " chi2: " << fittweeter->GetChisquare() / fittweeter->GetNDF()
             << std::endl;
-  std::cout << '\n';
 
   TF1 *fitmidrange =
       new TF1("fitmidrange",
@@ -88,10 +87,8 @@ void grafico_frequenze_senzaFGEN() {
             << fitmidrange->GetParError(1)
             << ",   tau_{cm} = " << fitmidrange->GetParameter(2) << " +/- "
             << fitmidrange->GetParError(2)
-            << "chi2:" << fitmidrange->GetChisquare() / fitmidrange->GetNDF()
+            << " chi2: " << fitmidrange->GetChisquare() / fitmidrange->GetNDF()
             << std::endl;
-  ;
-  std::cout << '\n';
 
   myCanvas->Print("multigrafico_ampiezze_frequenze.jpg");
   myCanvas->Print("multigrafico_ampiezze_frequenze.pdf");
