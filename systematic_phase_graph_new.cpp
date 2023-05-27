@@ -118,11 +118,12 @@ void grafico_fasi() {
   std::ofstream Fase_t_corretto("Fase_t_corretto.txt", std::ofstream::out);
 
   double coeff_ang_A2 =  0.00186314;
+  double err_fase_t=3.5*0.03231;
   while (Fase_t.good()) {
     double frequenza, fase;
     Fase_t >> frequenza >> fase;
     double fase_corr = fase - (coeff_ang_A2-coeff_ang_A0) * frequenza - offset;
-    Fase_t_corretto << frequenza << " " << fase_corr << " " << err_freq << " " << err_fase << std::endl;
+    Fase_t_corretto << frequenza << " " << fase_corr << " " << err_freq << " " << err_fase_t << std::endl;
   }
   Fase_t.close();
 
@@ -190,7 +191,7 @@ void grafico_fasi() {
             << fitwoofer->GetParError(1) << ", con un chi2 di: " << fitwoofer->GetChisquare()/fitwoofer->GetNDF() << std::endl;
 
   TF1 *fittweeter =
-      new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/(2*pi*x*[0]*[1]) )", 2000,11000);
+      new TF1("fittweeter", "(180/pi) * TMath::ATan( (1)/(2*pi*x*[0]*[1]) )", 4000,8000);
   fittweeter->SetParameter(0, 0.0000235374);
   fittweeter->SetParameter(1, 1.18805);
   fase_t->Fit("fittweeter", "Q,E,R");
