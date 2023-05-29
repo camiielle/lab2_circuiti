@@ -1,14 +1,14 @@
 
-void setStyle_frequenze() {
-  gROOT->SetStyle("Plain");
-  gStyle->SetPalette(57);
-  gStyle->SetOptTitle(0);
+void setStyle() {
+  gStyle->SetPadTickX(1);
+  gStyle->SetPadTickY(1);
+  gStyle->SetGridColor(kGray);
 }
 
 void grafico_frequenze() {
   TMultiGraph *mg = new TMultiGraph();
   mg->SetTitle(
-      "Gain in funzione della frequenza; Frequenza (Hz); Gain (adimensionale)");
+      "Guadagno in funzione della frequenza (Metodo 2); Frequenza (Hz); G (un. arb.)");
 
   TGraphErrors *graph_W =
       new TGraphErrors("Ampiezza_w_div_vin.txt", "%lg %lg %lg %lg");
@@ -27,30 +27,29 @@ void grafico_frequenze() {
   graph_W->SetLineColor(kOrange - 3);
   graph_W->SetMarkerColor(kOrange - 3);
   graph_W->SetLineWidth(1);
+  graph_W->SetMarkerStyle(7);
 
   graph_T->SetLineColor(kGreen - 9);
   graph_T->SetMarkerColor(kGreen - 9);
   graph_T->SetLineWidth(1);
+  graph_T->SetMarkerStyle(7);
 
   graph_M->SetLineColor(kMagenta);
   graph_M->SetMarkerColor(kMagenta);
   graph_M->SetLineWidth(1);
+  graph_M->SetMarkerStyle(7);
 
-  // Draw the 2kHz multi-graph!
+
+  // Draw the multi-graph!
   TCanvas *myCanvas = new TCanvas("myc", "myc", 720, 450);
-  mg->Draw("ACP");
-  // Build and Draw a legend
-  TLegend *leg =
-      new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
-  leg->AddEntry(graph_W, "woofer");
-  leg->AddEntry(graph_T, "tweeter");
-  leg->AddEntry(graph_M, "midrange");
-  leg->SetFillStyle(1001);
-  leg->Draw("Same");
+  mg->Draw("APC");
+ 
 
   // fitting gain function, i.e. Voltage/5V
   TF1 *fitwoofer = new TF1(
       "fitwoofer", "1./(sqrt([0]*[0]+4*pi*pi*(x*x)*([1]*[1])))", 2000, 11000);
+  fitwoofer->SetLineWidth(1);
+  fitwoofer->SetLineColor(kBlack);
   fitwoofer->SetParameter(0, 1.18);
   fitwoofer->SetParameter(1, 0.0000063);
   graph_W->Fit("fitwoofer", "Q");
@@ -63,6 +62,8 @@ void grafico_frequenze() {
             << '\n';
   TF1 *fittweeter = new TF1(
       "fittweeter", "1./(sqrt([0]*[0]+1/(4*pi*pi*x*x*[1]*[1])))", 2000, 11000);
+  fittweeter->SetLineWidth(1);
+  fittweeter->SetLineColor(kBlack);
   fittweeter->SetParameter(0, 1.17);
   fittweeter->SetParameter(1, 0.0000063);
   graph_T->Fit("fittweeter", "Q");
@@ -77,6 +78,8 @@ void grafico_frequenze() {
   TF1 *fitmidrange = new TF1(
       "fitmidrange",
       "1./(sqrt([0]*[0] + ( [1]*x*2*pi - (1/([2]*x*2*pi)) )^2 ))", 2000, 11000);
+  fitmidrange->SetLineWidth(1);
+  fitmidrange->SetLineColor(kBlack);
   fitmidrange->SetParameter(0, 1.1725748);
   fitmidrange->SetParameter(1, 0.00003944449078);
   fitmidrange->SetParameter(2, 0.00002613602);
@@ -89,6 +92,16 @@ void grafico_frequenze() {
             << fitmidrange->GetParError(2) << std::endl;
   std::cout << "Chi_{m} " << fitmidrange->GetChisquare() / fitmidrange->GetNDF() << '\n';
   std::cout << '\n';
+
+   // Build and Draw a legend
+  TLegend *leg =
+      new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
+  leg->AddEntry(graph_W, "woofer");
+  leg->AddEntry(graph_T, "tweeter");
+  leg->AddEntry(graph_M, "midrange");
+  leg->AddEntry(fitwoofer, "fit");
+  leg->SetFillStyle(1001);
+  leg->Draw("Same");
 
   myCanvas->Print("multigrafico_ampiezze_frequenze.jpg");
   myCanvas->Print("multigrafico_ampiezze_frequenze.pdf");

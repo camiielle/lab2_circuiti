@@ -1,8 +1,8 @@
 
 void setStyle() {
-  gROOT->SetStyle("Plain");
-  gStyle->SetPalette(57);
-  gStyle->SetOptTitle(0);
+  gStyle->SetPadTickX(1);
+  gStyle->SetPadTickY(1);
+  gStyle->SetGridColor(kGray);
 }
 
 void grafico() {
@@ -23,16 +23,16 @@ void grafico() {
   mg->Add(graph_M);
 
   // Cosmetics
-  graph_Gen->SetLineColor(kBlue-4);
-  graph_Gen->SetMarkerColor(kBlue-4);
+  graph_Gen->SetLineColor(kBlue - 4);
+  graph_Gen->SetMarkerColor(kBlue - 4);
   graph_Gen->SetLineWidth(1);
 
-  graph_W->SetLineColor(kOrange-3);
-  graph_W->SetMarkerColor(kOrange-3);
+  graph_W->SetLineColor(kOrange - 3);
+  graph_W->SetMarkerColor(kOrange - 3);
   graph_W->SetLineWidth(1);
 
-  graph_T->SetLineColor(kGreen-9);
-  graph_T->SetMarkerColor(kGreen-9);
+  graph_T->SetLineColor(kGreen - 9);
+  graph_T->SetMarkerColor(kGreen - 9);
   graph_T->SetLineWidth(1);
 
   graph_M->SetLineColor(kMagenta);
@@ -40,12 +40,17 @@ void grafico() {
   graph_M->SetLineWidth(1);
 
   // Draw the 2kHz multi-graph!
-  TCanvas *myCanvas = new TCanvas("myCanvas","myCanvas", 1000,380);
-  myCanvas->Divide(2,1);
+  TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas", 1000, 380);
+  myCanvas->SetGrid();
+  myCanvas->SetGridx();
+  myCanvas->SetGridy();
+  myCanvas->Divide(2, 1);
   myCanvas->cd(1);
+  // Set the title of the TMultiGraph
   mg->Draw("al");
   // Build and Draw a legend
-  TLegend *leg = new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
+  TLegend *leg =
+      new TLegend(0.7086384, 0.8323133, 0.8997072, 0.9008568, NULL, "brNDC");
   leg->AddEntry(graph_Gen, "gen");
   leg->AddEntry(graph_W, "woofer");
   leg->AddEntry(graph_T, "tweeter");
@@ -53,6 +58,9 @@ void grafico() {
   leg->SetFillStyle(1001);
   leg->SetNColumns(2);
   leg->Draw("Same");
+
+  myCanvas->Update();
+
 
   // 11kHz graph
   TMultiGraph *mg2 = new TMultiGraph();
@@ -71,16 +79,16 @@ void grafico() {
   mg2->Add(graph_M2);
 
   // Cosmetics
-  graph_Gen2->SetLineColor(kBlue-4);
-  graph_Gen2->SetMarkerColor(kBlue-4);
+  graph_Gen2->SetLineColor(kBlue - 4);
+  graph_Gen2->SetMarkerColor(kBlue - 4);
   graph_Gen2->SetLineWidth(1);
 
-  graph_W2->SetLineColor(kOrange-3);
-  graph_W2->SetMarkerColor(kOrange-3);
+  graph_W2->SetLineColor(kOrange - 3);
+  graph_W2->SetMarkerColor(kOrange - 3);
   graph_W2->SetLineWidth(1);
 
-  graph_T2->SetLineColor(kGreen-9);
-  graph_T2->SetMarkerColor(kGreen-9);
+  graph_T2->SetLineColor(kGreen - 9);
+  graph_T2->SetMarkerColor(kGreen - 9);
   graph_T2->SetLineWidth(1);
 
   graph_M2->SetLineColor(kMagenta);
@@ -118,16 +126,16 @@ void grafico() {
   mg3->Add(graph_M3);
 
   // Cosmetics
-  graph_Gen3->SetLineColor(kBlue-4);
-  graph_Gen3->SetMarkerColor(kBlue-4);
+  graph_Gen3->SetLineColor(kBlue - 4);
+  graph_Gen3->SetMarkerColor(kBlue - 4);
   graph_Gen3->SetLineWidth(1);
 
-  graph_W3->SetLineColor(kOrange-3);
-  graph_W3->SetMarkerColor(kOrange-3);
+  graph_W3->SetLineColor(kOrange - 3);
+  graph_W3->SetMarkerColor(kOrange - 3);
   graph_W3->SetLineWidth(1);
 
-  graph_T3->SetLineColor(kGreen-9);
-  graph_T3->SetMarkerColor(kGreen-9);
+  graph_T3->SetLineColor(kGreen - 9);
+  graph_T3->SetMarkerColor(kGreen - 9);
   graph_T3->SetLineWidth(1);
 
   graph_M3->SetLineColor(kMagenta);
